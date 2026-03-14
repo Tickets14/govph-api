@@ -85,5 +85,14 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
       updated_at: new Date(),
     },
+    {
+      id: '00000000-0000-4000-a000-000000000010',
+      name: 'Office of the Barangay Captain',
+      slug: 'barangay',
+      website_url: null,
+      logo_url: null,
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
   ]);
 }

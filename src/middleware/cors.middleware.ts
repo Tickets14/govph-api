@@ -1,6 +1,7 @@
 import cors, { CorsOptions } from 'cors';
 import { env } from '../config/env';
 import logger from '../logging/logger';
+import { ForbiddenError } from './error.middleware';
 
 const allowedOrigins = env.CORS_ORIGINS
   .split(',')
@@ -17,7 +18,7 @@ const corsOptions: CorsOptions = {
     }
 
     logger.warn(`CORS blocked origin: ${origin}`);
-    callback(new Error(`Origin '${origin}' is not allowed by CORS policy`));
+    callback(new ForbiddenError(`Origin '${origin}' is not allowed by CORS policy`));
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: [

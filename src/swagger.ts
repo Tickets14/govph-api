@@ -232,7 +232,8 @@ const options: swaggerJsdoc.Options = {
           summary: 'List services (paginated, filterable)',
           parameters: [
             { name: 'search', in: 'query', description: 'Full-text search across name, description, and agency name', schema: { type: 'string' } },
-            { name: 'agency_id', in: 'query', schema: { type: 'string', format: 'uuid' } },
+            { name: 'agency', in: 'query', description: 'Filter by agency slug (e.g. "dfa", "nbi"). Cannot be combined with agency_id.', schema: { type: 'string', example: 'dfa' } },
+            { name: 'agency_id', in: 'query', description: 'Filter by agency UUID. Cannot be combined with agency.', schema: { type: 'string', format: 'uuid' } },
             { name: 'is_active', in: 'query', schema: { type: 'string', enum: ['true', 'false'] } },
             { name: 'page', in: 'query', schema: { type: 'integer', default: 1 } },
             { name: 'limit', in: 'query', schema: { type: 'integer', default: 20 } },

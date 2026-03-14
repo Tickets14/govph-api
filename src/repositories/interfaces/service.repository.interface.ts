@@ -2,6 +2,7 @@ import { Service } from '../../types/service.types';
 
 export interface ServiceFilters {
   agency_id?: string;
+  agency_slug?: string; // slug-based filter, e.g. "dfa" — resolved via JOIN
   is_active?: boolean;
   search?: string;
   limit?: number;

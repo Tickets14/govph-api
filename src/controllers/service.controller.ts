@@ -14,10 +14,11 @@ export class ServiceController {
    */
   getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { agency_id, is_active, search } = req.query as ServiceFilterQuery;
+      const { agency_id, agency, is_active, search } = req.query as ServiceFilterQuery;
       const result = await this.service.getAllServices(
         {
           agency_id,
+          agency_slug: agency,
           is_active: is_active !== undefined ? is_active === 'true' : undefined,
           search,
         },

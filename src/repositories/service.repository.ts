@@ -16,6 +16,9 @@ export class ServiceRepository
     if (filters?.agency_id) {
       void query.where('s.agency_id', filters.agency_id);
     }
+    if (filters?.agency_slug) {
+      void query.where('a.slug', filters.agency_slug);
+    }
     if (filters?.is_active !== undefined) {
       void query.where('s.is_active', filters.is_active);
     }

@@ -151,5 +151,20 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
       updated_at: new Date(),
     },
+
+    // ── Barangay ──────────────────────────────────────────────────────────────
+    {
+      id: '00000000-0000-4000-b000-000000000011',
+      agency_id: '00000000-0000-4000-a000-000000000010',
+      name: 'Barangay Clearance',
+      slug: 'barangay-clearance',
+      description:
+        'A Barangay Clearance is an official document issued by the Office of the Barangay Captain certifying that the bearer is a resident in good standing with no derogatory record in the barangay. It is commonly required for employment, business permits, loans, and other local transactions.',
+      estimated_time: '30 minutes to 1 hour (walk-in, same day)',
+      appointment_url: null,
+      is_active: true,
+      created_at: new Date(),
+      updated_at: new Date(),
+    },
   ]);
 }

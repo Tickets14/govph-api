@@ -36,6 +36,7 @@ export const UpdateServiceDto = z.object({
 export const ServiceFilterDto = z.object({
   query: z.object({
     agency_id: z.string().uuid().optional(),
+    agency: slugRule.optional(), // slug-based agency filter, e.g. ?agency=dfa
     is_active: z.enum(['true', 'false']).optional(),
     search: z.string().min(1).max(100).optional(),
     page: z.string().regex(/^\d+$/).optional(),
@@ -51,6 +52,8 @@ export const ServiceSlugParamsDto = z.object({
   params: z.object({ slug: z.string().min(1).max(100) }),
 });
 
-export type CreateServiceBody = z.infer<typeof CreateServiceDto>['body'];
-export type UpdateServiceBody = z.infer<typeof UpdateServiceDto>['body'];
-export type ServiceFilterQuery = z.infer<typeof ServiceFilterDto>['query'];
+export type CreateServiceBody    = z.infer<typeof CreateServiceDto>['body'];
+export type UpdateServiceBody    = z.infer<typeof UpdateServiceDto>['body'];
+export type ServiceFilterQuery   = z.infer<typeof ServiceFilterDto>['query'];
+export type ServiceIdParams      = z.infer<typeof ServiceIdParamsDto>['params'];
+export type ServiceSlugParams    = z.infer<typeof ServiceSlugParamsDto>['params'];

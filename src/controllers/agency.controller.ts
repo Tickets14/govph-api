@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { AgencyService } from '../services/agency.service';
 import { HTTP_STATUS } from '../constants/common';
-import { sendSuccess, sendCreated, sendNoContent } from '../utils/response';
-import { CreateAgencyBody, UpdateAgencyBody } from '../dto/agency.dto';
+import { sendSuccess, sendCreated, sendNoContent, sendPaginated } from '../utils/response';
+import { AgencyFilterQuery, CreateAgencyBody, UpdateAgencyBody } from '../dto/agency.dto';
 
 export class AgencyController {
   constructor(private readonly service: AgencyService) {}
@@ -11,10 +11,10 @@ export class AgencyController {
    * GET /agencies
    * Returns all agencies ordered by name.
    */
-  getAll = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+  getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const agencies = await this.service.getAllAgencies();
-      sendSuccess(res, agencies);
+      const result = await this.service.getAllAgencies(req.query as AgencyFilterQuery);
+      sendPaginated(res, result);
     } catch (err) {
       next(err);
     }

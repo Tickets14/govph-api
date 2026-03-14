@@ -120,10 +120,12 @@ export function errorHandler(
     return;
   }
 
-  // Known operational errors
+  // Known AppError hierarchy
   if (err instanceof AppError) {
-    if (!err.isOperational) {
-      logger.error('Non-operational error', {
+    // Always log 5xx AppErrors with a full stack trace — these indicate
+    // something unexpected even when the error is technically "operational".
+    if (err.statusCode >= 500) {
+      logger.error('Application error', {
         code: err.code,
         message: err.message,
         stack: err.stack,
