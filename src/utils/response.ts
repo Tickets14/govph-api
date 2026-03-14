@@ -2,12 +2,7 @@ import { Response } from 'express';
 import { HTTP_STATUS } from '../constants/common';
 import { ApiResponse, PaginatedResponse } from '../types/common.types';
 
-export function sendSuccess<T>(
-  res: Response,
-  data: T,
-  message?: string,
-  statusCode: number = HTTP_STATUS.OK,
-): void {
+export function sendSuccess<T>(res: Response, data: T, message?: string, statusCode: number = HTTP_STATUS.OK): void {
   const response: ApiResponse<T> = { success: true, data, message };
   res.status(statusCode).json(response);
 }

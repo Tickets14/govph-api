@@ -6,10 +6,7 @@ export function parsePagination(query: { page?: unknown; limit?: unknown }): {
   offset: number;
 } {
   const page = Math.max(1, Number(query.page) || PAGINATION.DEFAULT_PAGE);
-  const limit = Math.min(
-    PAGINATION.MAX_LIMIT,
-    Number(query.limit) || PAGINATION.DEFAULT_LIMIT,
-  );
+  const limit = Math.min(PAGINATION.MAX_LIMIT, Number(query.limit) || PAGINATION.DEFAULT_LIMIT);
   const offset = (page - 1) * limit;
   return { page, limit, offset };
 }

@@ -193,7 +193,10 @@ const options: swaggerJsdoc.Options = {
           },
           responses: {
             201: { description: 'Agency created' },
-            401: { description: 'Unauthorized', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
+            401: {
+              description: 'Unauthorized',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
             409: { description: 'Slug conflict' },
           },
         },
@@ -205,7 +208,10 @@ const options: swaggerJsdoc.Options = {
           parameters: [{ name: 'slug', in: 'path', required: true, schema: { type: 'string' } }],
           responses: {
             200: { description: 'Agency found' },
-            404: { description: 'Not found', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
+            404: {
+              description: 'Not found',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
+            },
           },
         },
       },
@@ -215,15 +221,26 @@ const options: swaggerJsdoc.Options = {
           summary: 'Update agency (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/Agency' } } } },
-          responses: { 200: { description: 'Updated' }, 401: { description: 'Unauthorized' }, 404: { description: 'Not found' } },
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Agency' } } },
+          },
+          responses: {
+            200: { description: 'Updated' },
+            401: { description: 'Unauthorized' },
+            404: { description: 'Not found' },
+          },
         },
         delete: {
           tags: ['Agencies'],
           summary: 'Delete agency (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
-          responses: { 204: { description: 'Deleted' }, 401: { description: 'Unauthorized' }, 404: { description: 'Not found' } },
+          responses: {
+            204: { description: 'Deleted' },
+            401: { description: 'Unauthorized' },
+            404: { description: 'Not found' },
+          },
         },
       },
       '/services': {
@@ -231,9 +248,24 @@ const options: swaggerJsdoc.Options = {
           tags: ['Services'],
           summary: 'List services (paginated, filterable)',
           parameters: [
-            { name: 'search', in: 'query', description: 'Full-text search across name, description, and agency name', schema: { type: 'string' } },
-            { name: 'agency', in: 'query', description: 'Filter by agency slug (e.g. "dfa", "nbi"). Cannot be combined with agency_id.', schema: { type: 'string', example: 'dfa' } },
-            { name: 'agency_id', in: 'query', description: 'Filter by agency UUID. Cannot be combined with agency.', schema: { type: 'string', format: 'uuid' } },
+            {
+              name: 'search',
+              in: 'query',
+              description: 'Full-text search across name, description, and agency name',
+              schema: { type: 'string' },
+            },
+            {
+              name: 'agency',
+              in: 'query',
+              description: 'Filter by agency slug (e.g. "dfa", "nbi"). Cannot be combined with agency_id.',
+              schema: { type: 'string', example: 'dfa' },
+            },
+            {
+              name: 'agency_id',
+              in: 'query',
+              description: 'Filter by agency UUID. Cannot be combined with agency.',
+              schema: { type: 'string', format: 'uuid' },
+            },
             { name: 'is_active', in: 'query', schema: { type: 'string', enum: ['true', 'false'] } },
             { name: 'page', in: 'query', schema: { type: 'integer', default: 1 } },
             { name: 'limit', in: 'query', schema: { type: 'integer', default: 20 } },
@@ -289,7 +321,10 @@ const options: swaggerJsdoc.Options = {
           summary: 'Get service detail with steps and requirements',
           parameters: [{ name: 'slug', in: 'path', required: true, schema: { type: 'string' } }],
           responses: {
-            200: { description: 'Service detail', content: { 'application/json': { schema: { $ref: '#/components/schemas/ServiceDetail' } } } },
+            200: {
+              description: 'Service detail',
+              content: { 'application/json': { schema: { $ref: '#/components/schemas/ServiceDetail' } } },
+            },
             404: { description: 'Not found' },
           },
         },
@@ -312,15 +347,26 @@ const options: swaggerJsdoc.Options = {
           summary: 'Update service (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/Service' } } } },
-          responses: { 200: { description: 'Updated' }, 401: { description: 'Unauthorized' }, 404: { description: 'Not found' } },
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Service' } } },
+          },
+          responses: {
+            200: { description: 'Updated' },
+            401: { description: 'Unauthorized' },
+            404: { description: 'Not found' },
+          },
         },
         delete: {
           tags: ['Services'],
           summary: 'Delete service (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
-          responses: { 204: { description: 'Deleted' }, 401: { description: 'Unauthorized' }, 404: { description: 'Not found' } },
+          responses: {
+            204: { description: 'Deleted' },
+            401: { description: 'Unauthorized' },
+            404: { description: 'Not found' },
+          },
         },
       },
       '/services/{serviceId}/steps': {
@@ -376,7 +422,10 @@ const options: swaggerJsdoc.Options = {
           summary: 'Update step (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/Step' } } } },
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Step' } } },
+          },
           responses: { 200: { description: 'Updated' }, 401: { description: 'Unauthorized' } },
         },
         delete: {
@@ -418,7 +467,10 @@ const options: swaggerJsdoc.Options = {
           summary: 'Update requirement (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
-          requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/Requirement' } } } },
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/Requirement' } } },
+          },
           responses: { 200: { description: 'Updated' }, 401: { description: 'Unauthorized' } },
         },
         delete: {
