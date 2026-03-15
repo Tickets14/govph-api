@@ -38,9 +38,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Railway CLI
-        run: npm install -g @railway/cli
+        run: npm install -g @railway/cli@3.11.0
 
-      - name: Deploy to Railway
-        run: railway up --service=${{ secrets.RAILWAY_SERVICE_ID }}
+      - name: Verify Railway auth
+        run: railway whoami
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deploy to Railway
+        run: RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway up --service=${{ secrets.RAILWAY_SERVICE_ID }}
