@@ -17,7 +17,7 @@ import { ErrorCode } from '../constants/error-codes';
 export function validate(schema: AnyZodObject) {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const result = await schema.safeParseAsync({
-      body: req.body,
+      body: req.body as unknown,
       params: req.params,
       query: req.query,
     });

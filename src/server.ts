@@ -3,13 +3,17 @@ import { env } from './config/env';
 import db from './config/database';
 import logger from './logging/logger';
 
+function toError(err: unknown): Error {
+  return err instanceof Error ? err : new Error(String(err));
+}
+
 async function bootstrap(): Promise<void> {
   // Verify DB connection
   try {
     await db.raw('SELECT 1');
     logger.info('Database connection established');
-  } catch (err) {
-    logger.error('Failed to connect to database', { error: err });
+  } catch (err: unknown) {
+    logger.error('Failed to connect to database', { error: toError(err) });
     process.exit(1);
   }
 
@@ -18,12 +22,19 @@ async function bootstrap(): Promise<void> {
   });
 
   // Graceful shutdown
-  const shutdown = async (signal: string): Promise<void> => {
+  const shutdown = (signal: string): void => {
     logger.info(`${signal} received — shutting down gracefully`);
-    server.close(async () => {
-      await db.destroy();
-      logger.info('Server closed');
-      process.exit(0);
+    server.close(() => {
+      void db
+        .destroy()
+        .then(() => {
+          logger.info('Server closed');
+          process.exit(0);
+        })
+        .catch((err: unknown) => {
+          logger.error('Error during shutdown', { error: toError(err) });
+          process.exit(1);
+        });
     });
   };
 
@@ -31,7 +42,7 @@ async function bootstrap(): Promise<void> {
   process.on('SIGINT', () => shutdown('SIGINT'));
 }
 
-bootstrap().catch((err) => {
-  console.error('Fatal error during startup:', err);
+bootstrap().catch((err: unknown) => {
+  console.error('Fatal error during startup:', toError(err));
   process.exit(1);
 });

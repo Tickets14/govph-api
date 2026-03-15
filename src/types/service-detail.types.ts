@@ -1,7 +1,6 @@
 import { Agency } from './agency.types';
 import { Service } from './service.types';
 import { Requirement } from './requirement.types';
-import { UserProgress } from './progress.types';
 
 export interface StepWithRequirements {
   id: string;
