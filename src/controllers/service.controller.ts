@@ -22,7 +22,7 @@ export class ServiceController {
           is_active: is_active !== undefined ? is_active === 'true' : undefined,
           search,
         },
-        req.query,
+        req.query
       );
       sendPaginated(res, result);
     } catch (err) {
@@ -51,10 +51,7 @@ export class ServiceController {
   getWithProgress = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = getUserId(req);
-      const service = await this.service.getServiceWithProgress(
-        String(req.params['slug']),
-        userId,
-      );
+      const service = await this.service.getServiceWithProgress(String(req.params['slug']), userId);
       sendSuccess(res, service);
     } catch (err) {
       next(err);
@@ -78,10 +75,7 @@ export class ServiceController {
    */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const svc = await this.service.updateService(
-        String(req.params['id']),
-        req.body as UpdateServiceBody,
-      );
+      const svc = await this.service.updateService(String(req.params['id']), req.body as UpdateServiceBody);
       sendSuccess(res, svc, 'Service updated', HTTP_STATUS.OK);
     } catch (err) {
       next(err);

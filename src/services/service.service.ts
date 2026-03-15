@@ -9,11 +9,7 @@ import { UserProgressRepository } from '../repositories/user-progress.repository
 import { PaginatedResponse } from '../types/common.types';
 import { parsePagination } from '../utils/pagination';
 import { generateId } from '../utils/uuid';
-import {
-  AgencyNotFoundError,
-  ServiceNotFoundError,
-  ConflictError,
-} from '../middleware/error.middleware';
+import { AgencyNotFoundError, ServiceNotFoundError, ConflictError } from '../middleware/error.middleware';
 
 export class ServiceService {
   constructor(
@@ -21,12 +17,12 @@ export class ServiceService {
     private readonly agencyRepo: AgencyRepository,
     private readonly stepRepo: StepRepository,
     private readonly requirementRepo: RequirementRepository,
-    private readonly progressRepo: UserProgressRepository,
+    private readonly progressRepo: UserProgressRepository
   ) {}
 
   async getAllServices(
     filters?: Omit<ServiceFilters, 'limit' | 'offset'>,
-    paginationQuery: { page?: unknown; limit?: unknown } = {},
+    paginationQuery: { page?: unknown; limit?: unknown } = {}
   ): Promise<PaginatedResponse<Service>> {
     const { page, limit, offset } = parsePagination(paginationQuery);
     const [data, total] = await Promise.all([
@@ -48,9 +44,7 @@ export class ServiceService {
 
     if (!agency) throw new AgencyNotFoundError(service.agency_id);
 
-    const requirementsByStep = new Map(
-      steps.map((s) => [s.id, allRequirements.filter((r) => r.step_id === s.id)]),
-    );
+    const requirementsByStep = new Map(steps.map((s) => [s.id, allRequirements.filter((r) => r.step_id === s.id)]));
 
     return {
       ...service,
@@ -64,10 +58,7 @@ export class ServiceService {
 
   async getServiceWithProgress(slug: string, userId: string): Promise<ServiceWithProgress> {
     const serviceDetail = await this.getServiceBySlug(slug);
-    const progressRecords = await this.progressRepo.findByUserAndService(
-      userId,
-      serviceDetail.id,
-    );
+    const progressRecords = await this.progressRepo.findByUserAndService(userId, serviceDetail.id);
 
     const progressByStep = new Map(progressRecords.map((p) => [p.step_id, p]));
 
@@ -82,8 +73,7 @@ export class ServiceService {
 
     const completedCount = stepsWithProgress.filter((s) => s.is_completed).length;
     const totalSteps = stepsWithProgress.length;
-    const completion_percentage =
-      totalSteps > 0 ? Math.round((completedCount / totalSteps) * 100) : 0;
+    const completion_percentage = totalSteps > 0 ? Math.round((completedCount / totalSteps) * 100) : 0;
 
     return { ...serviceDetail, steps: stepsWithProgress, completion_percentage };
   }

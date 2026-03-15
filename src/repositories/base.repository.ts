@@ -11,30 +11,30 @@ export abstract class BaseRepository<T extends { id: string }> {
     let query = db(this.tableName).select('*');
     if (limit !== undefined) query = query.limit(limit);
     if (offset !== undefined) query = query.offset(offset);
-    return query as unknown as T[];
+    const rows = await query;
+    return rows as unknown as T[];
   }
 
   async count(): Promise<number> {
-    const result = await db(this.tableName)
-      .count('* as count')
-      .first() as { count: string } | undefined;
+    const result = (await db(this.tableName).count('* as count').first()) as { count: string } | undefined;
     return Number(result?.count ?? 0);
   }
 
   async findById(id: string): Promise<T | undefined> {
-    return db(this.tableName).where({ id }).first() as Promise<T | undefined>;
+    const row = (await db(this.tableName).where({ id }).first()) as unknown as T | undefined;
+    return row;
   }
 
   async create(data: Partial<T>): Promise<T> {
-    const rows = await db(this.tableName).insert(data).returning('*') as unknown as T[];
+    const rows = (await db(this.tableName).insert(data).returning('*')) as unknown as T[];
     return rows[0];
   }
 
   async update(id: string, data: Partial<T>): Promise<T | undefined> {
-    const rows = await db(this.tableName)
+    const rows = (await db(this.tableName)
       .where({ id })
       .update({ ...data, updated_at: new Date() })
-      .returning('*') as unknown as T[];
+      .returning('*')) as unknown as T[];
     return rows[0];
   }
 

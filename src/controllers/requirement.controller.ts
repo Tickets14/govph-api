@@ -28,10 +28,7 @@ export class RequirementController {
    */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const requirement = await this.service.update(
-        String(req.params['id']),
-        req.body as UpdateRequirementBody,
-      );
+      const requirement = await this.service.update(String(req.params['id']), req.body as UpdateRequirementBody);
       sendSuccess(res, requirement, 'Requirement updated', HTTP_STATUS.OK);
     } catch (err) {
       next(err);

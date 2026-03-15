@@ -42,8 +42,8 @@ export const AgencyFilterDto = z.object({
   }),
 });
 
-export type CreateAgencyBody    = z.infer<typeof CreateAgencyDto>['body'];
-export type UpdateAgencyBody    = z.infer<typeof UpdateAgencyDto>['body'];
-export type AgencyFilterQuery   = z.infer<typeof AgencyFilterDto>['query'];
-export type AgencyIdParams      = z.infer<typeof AgencyIdParamsDto>['params'];
-export type AgencySlugParams    = z.infer<typeof AgencySlugParamsDto>['params'];
+export type CreateAgencyBody = z.infer<typeof CreateAgencyDto>['body'];
+export type UpdateAgencyBody = z.infer<typeof UpdateAgencyDto>['body'];
+export type AgencyFilterQuery = z.infer<typeof AgencyFilterDto>['query'];
+export type AgencyIdParams = z.infer<typeof AgencyIdParamsDto>['params'];
+export type AgencySlugParams = z.infer<typeof AgencySlugParamsDto>['params'];

@@ -27,8 +27,8 @@ export const RequirementIdParamsDto = z.object({
   params: z.object({ id: z.string().uuid('Must be a valid UUID') }),
 });
 
-export type CreateRequirementBody   = z.infer<typeof CreateRequirementDto>['body'];
+export type CreateRequirementBody = z.infer<typeof CreateRequirementDto>['body'];
 export type CreateRequirementParams = z.infer<typeof CreateRequirementDto>['params'];
-export type UpdateRequirementBody   = z.infer<typeof UpdateRequirementDto>['body'];
+export type UpdateRequirementBody = z.infer<typeof UpdateRequirementDto>['body'];
 export type UpdateRequirementParams = z.infer<typeof UpdateRequirementDto>['params'];
-export type RequirementIdParams     = z.infer<typeof RequirementIdParamsDto>['params'];
+export type RequirementIdParams = z.infer<typeof RequirementIdParamsDto>['params'];

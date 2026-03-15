@@ -8,9 +8,8 @@ export class StepRepository extends BaseRepository<Step> implements IStepReposit
   protected tableName = TABLES.STEPS;
 
   async findByService(serviceId: string): Promise<Step[]> {
-    return this.db(this.tableName)
-      .where({ service_id: serviceId })
-      .orderBy('order', 'asc') as unknown as Step[];
+    const rows = await this.db(this.tableName).where({ service_id: serviceId }).orderBy('order', 'asc');
+    return rows as unknown as Step[];
   }
 
   /**

@@ -1,9 +1,6 @@
 import { Router } from 'express';
 import { ProgressController } from '../controllers/progress.controller';
-import {
-  validateProgressServiceParams,
-  validateToggleProgress,
-} from '../validators/progress.validator';
+import { validateProgressServiceParams, validateToggleProgress } from '../validators/progress.validator';
 
 /**
  * Mounted at /progress

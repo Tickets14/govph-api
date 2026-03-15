@@ -14,10 +14,7 @@ import { validateCreateRequirement } from '../validators/requirement.validator';
  *   DELETE /:id                   → delete step
  *   POST   /:stepId/requirements  → create requirement under step
  */
-export function stepRoutes(
-  stepController: StepController,
-  requirementController: RequirementController,
-): Router {
+export function stepRoutes(stepController: StepController, requirementController: RequirementController): Router {
   const router = Router();
 
   router.put('/:id', strictRateLimit, adminGuard, validateUpdateStep, stepController.update);
@@ -29,7 +26,7 @@ export function stepRoutes(
     strictRateLimit,
     adminGuard,
     validateCreateRequirement,
-    requirementController.create,
+    requirementController.create
   );
 
   return router;

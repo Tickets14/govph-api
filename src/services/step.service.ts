@@ -7,7 +7,7 @@ import { ServiceNotFoundError, StepNotFoundError } from '../middleware/error.mid
 export class StepService {
   constructor(
     private readonly repo: StepRepository,
-    private readonly serviceRepo: ServiceRepository,
+    private readonly serviceRepo: ServiceRepository
   ) {}
 
   async getByServiceId(serviceId: string): Promise<Step[]> {

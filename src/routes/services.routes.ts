@@ -27,10 +27,7 @@ import { validateCreateStep, validateReorderSteps } from '../validators/step.val
  *   POST   /:serviceId/steps        → add step to service
  *   PATCH  /:serviceId/steps/reorder → reorder steps
  */
-export function serviceRoutes(
-  serviceController: ServiceController,
-  stepController: StepController,
-): Router {
+export function serviceRoutes(serviceController: ServiceController, stepController: StepController): Router {
   const router = Router();
 
   // ── Public ────────────────────────────────────────────────────────────────

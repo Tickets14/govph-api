@@ -9,15 +9,14 @@ const devFormat = combine(
   errors({ stack: true }),
   printf(({ level, message, timestamp: ts, ...meta }) => {
     const extras = Object.keys(meta).length ? ` ${JSON.stringify(meta)}` : '';
-    return `${ts} [${level}] ${message}${extras}`;
-  }),
+    const safeLevel = typeof level === 'string' ? level : String(level);
+    const safeMessage = typeof message === 'string' ? message : String(message);
+    const safeTimestamp = typeof ts === 'string' ? ts : String(ts);
+    return `${safeTimestamp} [${safeLevel}] ${safeMessage}${extras}`;
+  })
 );
 
-const prodFormat = combine(
-  timestamp(),
-  errors({ stack: true }),
-  json(),
-);
+const prodFormat = combine(timestamp(), errors({ stack: true }), json());
 
 const logger = winston.createLogger({
   // 'http' (level 3) is between info (2) and verbose (4).

@@ -3,17 +3,13 @@ import { RequirementRepository } from '../repositories/requirement.repository';
 import { StepRepository } from '../repositories/step.repository';
 import { ServiceRepository } from '../repositories/service.repository';
 import { generateId } from '../utils/uuid';
-import {
-  StepNotFoundError,
-  ServiceNotFoundError,
-  RequirementNotFoundError,
-} from '../middleware/error.middleware';
+import { StepNotFoundError, ServiceNotFoundError, RequirementNotFoundError } from '../middleware/error.middleware';
 
 export class RequirementService {
   constructor(
     private readonly repo: RequirementRepository,
     private readonly stepRepo: StepRepository,
-    private readonly serviceRepo: ServiceRepository,
+    private readonly serviceRepo: ServiceRepository
   ) {}
 
   async getByStepId(stepId: string): Promise<Requirement[]> {

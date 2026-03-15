@@ -34,28 +34,18 @@ const serviceService = new ServiceService(
   agencyRepository,
   stepRepository,
   requirementRepository,
-  userProgressRepository,
+  userProgressRepository
 );
 
 const stepService = new StepService(stepRepository, serviceRepository);
 
-const requirementService = new RequirementService(
-  requirementRepository,
-  stepRepository,
-  serviceRepository,
-);
+const requirementService = new RequirementService(requirementRepository, stepRepository, serviceRepository);
 
-const progressService = new ProgressService(
-  userProgressRepository,
-  serviceRepository,
-  stepRepository,
-);
+const progressService = new ProgressService(userProgressRepository, serviceRepository, stepRepository);
 
 // ─── Controllers ──────────────────────────────────────────────────────────────
 export const agencyController = new AgencyController(agencyService);
 export const serviceController = new ServiceController(serviceService);
 export const stepController = new StepController(stepService);
-export const requirementController = new RequirementController(
-  requirementService,
-);
+export const requirementController = new RequirementController(requirementService);
 export const progressController = new ProgressController(progressService);

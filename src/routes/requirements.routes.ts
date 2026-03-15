@@ -2,10 +2,7 @@ import { Router } from 'express';
 import { RequirementController } from '../controllers/requirement.controller';
 import { adminGuard } from '../middleware/admin-guard.middleware';
 import { strictRateLimit } from '../middleware/rate-limit.middleware';
-import {
-  validateRequirementIdParams,
-  validateUpdateRequirement,
-} from '../validators/requirement.validator';
+import { validateRequirementIdParams, validateUpdateRequirement } from '../validators/requirement.validator';
 
 /**
  * Mounted at /requirements

@@ -11,7 +11,7 @@ export class AppError extends Error {
     public override message: string,
     public readonly statusCode: number = HTTP_STATUS.INTERNAL_SERVER_ERROR,
     public readonly code: ErrorCode = ErrorCode.INTERNAL_ERROR,
-    public readonly isOperational: boolean = true,
+    public readonly isOperational: boolean = true
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -43,28 +43,19 @@ export class NotFoundError extends AppError {
 
 export class AgencyNotFoundError extends NotFoundError {
   constructor(identifier?: string) {
-    super(
-      identifier ? `Agency '${identifier}' not found` : 'Agency not found',
-      ErrorCode.AGENCY_NOT_FOUND,
-    );
+    super(identifier ? `Agency '${identifier}' not found` : 'Agency not found', ErrorCode.AGENCY_NOT_FOUND);
   }
 }
 
 export class ServiceNotFoundError extends NotFoundError {
   constructor(identifier?: string) {
-    super(
-      identifier ? `Service '${identifier}' not found` : 'Service not found',
-      ErrorCode.SERVICE_NOT_FOUND,
-    );
+    super(identifier ? `Service '${identifier}' not found` : 'Service not found', ErrorCode.SERVICE_NOT_FOUND);
   }
 }
 
 export class StepNotFoundError extends NotFoundError {
   constructor(identifier?: string) {
-    super(
-      identifier ? `Step '${identifier}' not found` : 'Step not found',
-      ErrorCode.STEP_NOT_FOUND,
-    );
+    super(identifier ? `Step '${identifier}' not found` : 'Step not found', ErrorCode.STEP_NOT_FOUND);
   }
 }
 
@@ -72,7 +63,7 @@ export class RequirementNotFoundError extends NotFoundError {
   constructor(identifier?: string) {
     super(
       identifier ? `Requirement '${identifier}' not found` : 'Requirement not found',
-      ErrorCode.REQUIREMENT_NOT_FOUND,
+      ErrorCode.REQUIREMENT_NOT_FOUND
     );
   }
 }
@@ -101,12 +92,8 @@ export class InvalidProgressError extends AppError {
 
 // ─── Handlers ─────────────────────────────────────────────────────────────────
 
-export function errorHandler(
-  err: Error,
-  req: Request,
-  res: Response,
-  _next: NextFunction,
-): void {
+export function errorHandler(err: Error, req: Request, res: Response, _next: NextFunction): void {
+  void _next;
   // Zod schema validation errors
   if (err instanceof ZodError) {
     res.status(HTTP_STATUS.UNPROCESSABLE_ENTITY).json({

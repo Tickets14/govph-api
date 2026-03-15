@@ -25,9 +25,7 @@ export const UpdateStepDto = z.object({
 export const ReorderStepsDto = z.object({
   params: z.object({ serviceId: z.string().uuid('Must be a valid UUID') }),
   body: z.object({
-    step_ids: z
-      .array(z.string().uuid('Each step ID must be a valid UUID'))
-      .min(1, 'At least one step ID is required'),
+    step_ids: z.array(z.string().uuid('Each step ID must be a valid UUID')).min(1, 'At least one step ID is required'),
   }),
 });
 
@@ -35,10 +33,10 @@ export const StepIdParamsDto = z.object({
   params: z.object({ id: z.string().uuid('Must be a valid UUID') }),
 });
 
-export type CreateStepBody    = z.infer<typeof CreateStepDto>['body'];
-export type CreateStepParams  = z.infer<typeof CreateStepDto>['params'];
-export type UpdateStepBody    = z.infer<typeof UpdateStepDto>['body'];
-export type UpdateStepParams  = z.infer<typeof UpdateStepDto>['params'];
-export type ReorderStepsBody  = z.infer<typeof ReorderStepsDto>['body'];
+export type CreateStepBody = z.infer<typeof CreateStepDto>['body'];
+export type CreateStepParams = z.infer<typeof CreateStepDto>['params'];
+export type UpdateStepBody = z.infer<typeof UpdateStepDto>['body'];
+export type UpdateStepParams = z.infer<typeof UpdateStepDto>['params'];
+export type ReorderStepsBody = z.infer<typeof ReorderStepsDto>['body'];
 export type ReorderStepsParams = z.infer<typeof ReorderStepsDto>['params'];
-export type StepIdParams      = z.infer<typeof StepIdParamsDto>['params'];
+export type StepIdParams = z.infer<typeof StepIdParamsDto>['params'];

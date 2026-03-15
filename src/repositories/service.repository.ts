@@ -1,18 +1,13 @@
+import type { Knex } from 'knex';
 import { Service } from '../types/service.types';
 import { TABLES } from '../constants/tables';
 import { BaseRepository } from './base.repository';
 import { IServiceRepository, ServiceFilters } from './interfaces/service.repository.interface';
 
-export class ServiceRepository
-  extends BaseRepository<Service>
-  implements IServiceRepository
-{
+export class ServiceRepository extends BaseRepository<Service> implements IServiceRepository {
   protected tableName = TABLES.SERVICES;
 
-  private applyFilters(
-    query: ReturnType<typeof this.db>,
-    filters?: Omit<ServiceFilters, 'limit' | 'offset'>,
-  ) {
+  private applyFilters(query: Knex.QueryBuilder, filters?: Omit<ServiceFilters, 'limit' | 'offset'>) {
     if (filters?.agency_id) {
       void query.where('s.agency_id', filters.agency_id);
     }
@@ -25,10 +20,7 @@ export class ServiceRepository
     if (filters?.search) {
       const term = `%${filters.search}%`;
       void query.where((qb) => {
-        void qb
-          .whereILike('s.name', term)
-          .orWhereILike('s.description', term)
-          .orWhereILike('a.name', term);
+        void qb.whereILike('s.name', term).orWhereILike('s.description', term).orWhereILike('a.name', term);
       });
     }
   }
@@ -45,7 +37,8 @@ export class ServiceRepository
     if (filters?.limit !== undefined) void query.limit(filters.limit);
     if (filters?.offset !== undefined) void query.offset(filters.offset);
 
-    return query as unknown as Service[];
+    const rows = await query;
+    return rows as unknown as Service[];
   }
 
   async countFiltered(filters?: Omit<ServiceFilters, 'limit' | 'offset'>): Promise<number> {
@@ -54,19 +47,19 @@ export class ServiceRepository
       .count('s.id as count')
       .first();
 
-    this.applyFilters(query as unknown as ReturnType<typeof this.db>, filters);
+    this.applyFilters(query, filters);
 
     const result = (await query) as { count: string } | undefined;
     return Number(result?.count ?? 0);
   }
 
   async findBySlug(slug: string): Promise<Service | undefined> {
-    return this.db(this.tableName).where({ slug }).first() as Promise<Service | undefined>;
+    const row = (await this.db(this.tableName).where({ slug }).first()) as unknown as Service | undefined;
+    return row;
   }
 
   async findByAgency(agencyId: string): Promise<Service[]> {
-    return this.db(this.tableName)
-      .where({ agency_id: agencyId, is_active: true })
-      .orderBy('name', 'asc') as unknown as Service[];
+    const rows = await this.db(this.tableName).where({ agency_id: agencyId, is_active: true }).orderBy('name', 'asc');
+    return rows as unknown as Service[];
   }
 }

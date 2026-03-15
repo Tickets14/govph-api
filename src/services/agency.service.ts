@@ -8,14 +8,9 @@ import { AgencyNotFoundError, ConflictError } from '../middleware/error.middlewa
 export class AgencyService {
   constructor(private readonly repo: AgencyRepository) {}
 
-  async getAllAgencies(
-    query: { page?: unknown; limit?: unknown } = {},
-  ): Promise<PaginatedResponse<Agency>> {
+  async getAllAgencies(query: { page?: unknown; limit?: unknown } = {}): Promise<PaginatedResponse<Agency>> {
     const { page, limit, offset } = parsePagination(query);
-    const [data, total] = await Promise.all([
-      this.repo.findAll(limit, offset),
-      this.repo.count(),
-    ]);
+    const [data, total] = await Promise.all([this.repo.findAll(limit, offset), this.repo.count()]);
     return {
       data,
       meta: { total, page, limit, totalPages: Math.ceil(total / limit) },

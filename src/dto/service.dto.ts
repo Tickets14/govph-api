@@ -52,8 +52,8 @@ export const ServiceSlugParamsDto = z.object({
   params: z.object({ slug: z.string().min(1).max(100) }),
 });
 
-export type CreateServiceBody    = z.infer<typeof CreateServiceDto>['body'];
-export type UpdateServiceBody    = z.infer<typeof UpdateServiceDto>['body'];
-export type ServiceFilterQuery   = z.infer<typeof ServiceFilterDto>['query'];
-export type ServiceIdParams      = z.infer<typeof ServiceIdParamsDto>['params'];
-export type ServiceSlugParams    = z.infer<typeof ServiceSlugParamsDto>['params'];
+export type CreateServiceBody = z.infer<typeof CreateServiceDto>['body'];
+export type UpdateServiceBody = z.infer<typeof UpdateServiceDto>['body'];
+export type ServiceFilterQuery = z.infer<typeof ServiceFilterDto>['query'];
+export type ServiceIdParams = z.infer<typeof ServiceIdParamsDto>['params'];
+export type ServiceSlugParams = z.infer<typeof ServiceSlugParamsDto>['params'];

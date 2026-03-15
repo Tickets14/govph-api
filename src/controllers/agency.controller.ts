@@ -50,10 +50,7 @@ export class AgencyController {
    */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const agency = await this.service.updateAgency(
-        String(req.params['id']),
-        req.body as UpdateAgencyBody,
-      );
+      const agency = await this.service.updateAgency(String(req.params['id']), req.body as UpdateAgencyBody);
       sendSuccess(res, agency, 'Agency updated', HTTP_STATUS.OK);
     } catch (err) {
       next(err);

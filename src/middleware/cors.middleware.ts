@@ -3,8 +3,7 @@ import { env } from '../config/env';
 import logger from '../logging/logger';
 import { ForbiddenError } from './error.middleware';
 
-const allowedOrigins = env.CORS_ORIGINS
-  .split(',')
+const allowedOrigins = env.CORS_ORIGINS.split(',')
   .map((o) => o.trim())
   .filter(Boolean);
 
@@ -21,17 +20,8 @@ const corsOptions: CorsOptions = {
     callback(new ForbiddenError(`Origin '${origin}' is not allowed by CORS policy`));
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'X-User-Id',
-    'X-Admin-Key',
-  ],
-  exposedHeaders: [
-    'RateLimit-Limit',
-    'RateLimit-Remaining',
-    'RateLimit-Reset',
-  ],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-User-Id', 'X-Admin-Key'],
+  exposedHeaders: ['RateLimit-Limit', 'RateLimit-Remaining', 'RateLimit-Reset'],
   credentials: true,
   maxAge: 86_400, // 24 h preflight cache
 };

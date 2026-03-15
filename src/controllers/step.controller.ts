@@ -28,10 +28,7 @@ export class StepController {
    */
   update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const step = await this.service.update(
-        String(req.params['id']),
-        req.body as UpdateStepBody,
-      );
+      const step = await this.service.update(String(req.params['id']), req.body as UpdateStepBody);
       sendSuccess(res, step, 'Step updated', HTTP_STATUS.OK);
     } catch (err) {
       next(err);
