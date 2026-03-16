@@ -82,7 +82,7 @@ curl "http://localhost:3000/api/v1/health"
 curl "http://localhost:3000/api/v1/agencies?page=1&limit=20"
 ```
 
-`GET /agencies/:slug`
+`GET /agencies/:acronym`
 
 ```bash
 curl "http://localhost:3000/api/v1/agencies/dti"
@@ -91,7 +91,7 @@ curl "http://localhost:3000/api/v1/agencies/dti"
 `POST /agencies` (admin)
 
 ```bash
-curl -X POST "http://localhost:3000/api/v1/agencies" -H "Content-Type: application/json" -H "X-Admin-Key: <ADMIN_API_KEY>" -d '{"name":"Department of Trade and Industry","slug":"dti","website_url":"https://www.dti.gov.ph","logo_url":"https://example.com/logo.png"}'
+curl -X POST "http://localhost:3000/api/v1/agencies" -H "Content-Type: application/json" -H "X-Admin-Key: <ADMIN_API_KEY>" -d '{"name":"Department of Trade and Industry","acronym":"DTI","description":"Promotes trade and industry growth.","website_url":"https://www.dti.gov.ph","logo_url":"https://example.com/logo.png"}'
 ```
 
 `PUT /agencies/:id` (admin)

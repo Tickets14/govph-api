@@ -29,7 +29,7 @@ router.get('/health', (_req, res) => {
 /**
  * Agencies
  *   GET    /agencies
- *   GET    /agencies/:slug
+ *   GET    /agencies/:acronym
  *   POST   /agencies
  *   PUT    /agencies/:id
  *   DELETE /agencies/:id

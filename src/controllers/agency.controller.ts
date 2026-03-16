@@ -21,12 +21,12 @@ export class AgencyController {
   };
 
   /**
-   * GET /agencies/:slug
-   * Returns a single agency by its slug.
+   * GET /agencies/:acronym
+   * Returns a single agency by its acronym.
    */
-  getBySlug = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  getByAcronym = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const agency = await this.service.getAgencyBySlug(String(req.params['slug']));
+      const agency = await this.service.getAgencyByAcronym(String(req.params['acronym']));
       sendSuccess(res, agency);
     } catch (err) {
       next(err);

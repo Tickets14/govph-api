@@ -14,7 +14,7 @@ export class AgencyRepository extends BaseRepository<Agency> implements IAgencyR
     return rows as unknown as Agency[];
   }
 
-  async findBySlug(slug: string): Promise<Agency | undefined> {
-    return this.db(this.tableName).where({ slug }).first() as Promise<Agency | undefined>;
+  async findByAcronym(acronym: string): Promise<Agency | undefined> {
+    return this.db(this.tableName).where({ acronym }).first() as Promise<Agency | undefined>;
   }
 }

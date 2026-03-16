@@ -11,8 +11,8 @@ export class ServiceRepository extends BaseRepository<Service> implements IServi
     if (filters?.agency_id) {
       void query.where('s.agency_id', filters.agency_id);
     }
-    if (filters?.agency_slug) {
-      void query.where('a.slug', filters.agency_slug);
+    if (filters?.agency_acronym) {
+      void query.where('a.acronym', filters.agency_acronym);
     }
     if (filters?.is_active !== undefined) {
       void query.where('s.is_active', filters.is_active);

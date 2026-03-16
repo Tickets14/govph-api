@@ -5,7 +5,7 @@ import { strictRateLimit } from '../middleware/rate-limit.middleware';
 import {
   validateAgencyFilter,
   validateAgencyIdParams,
-  validateAgencySlugParams,
+  validateAgencyAcronymParams,
   validateCreateAgency,
   validateUpdateAgency,
 } from '../validators/agency.validator';
@@ -15,7 +15,7 @@ import {
  *
  * Public
  *   GET  /           → list all agencies
- *   GET  /:slug       → get agency by slug
+ *   GET  /:acronym       → get agency by acronym
  *
  * Admin  (requires X-Admin-Key header)
  *   POST   /          → create
@@ -27,7 +27,7 @@ export function agencyRoutes(controller: AgencyController): Router {
 
   // ── Public ────────────────────────────────────────────────────────────────
   router.get('/', validateAgencyFilter, controller.getAll);
-  router.get('/:slug', validateAgencySlugParams, controller.getBySlug);
+  router.get('/:acronym', validateAgencyAcronymParams, controller.getByAcronym);
 
   // ── Admin ─────────────────────────────────────────────────────────────────
   router.post('/', strictRateLimit, adminGuard, validateCreateAgency, controller.create);

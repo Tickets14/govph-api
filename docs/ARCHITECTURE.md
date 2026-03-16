@@ -52,8 +52,8 @@ Controllers handle HTTP details and delegate business logic to services. Respons
 
 Services implement core business rules:
 
-- Slug uniqueness checks.
-  -, Entity existence validation.
+- Acronym/slug uniqueness checks.
+- Entity existence validation.
 - Progress calculations.
 
 ### Repositories

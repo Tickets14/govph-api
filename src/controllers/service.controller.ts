@@ -18,7 +18,7 @@ export class ServiceController {
       const result = await this.service.getAllServices(
         {
           agency_id,
-          agency_slug: agency,
+          agency_acronym: agency,
           is_active: is_active !== undefined ? is_active === 'true' : undefined,
           search,
         },

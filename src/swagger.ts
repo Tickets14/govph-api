@@ -41,7 +41,8 @@ const options: swaggerJsdoc.Options = {
           properties: {
             id: { type: 'string', format: 'uuid' },
             name: { type: 'string', example: 'National Bureau of Investigation' },
-            slug: { type: 'string', example: 'nbi' },
+            acronym: { type: 'string', example: 'NBI' },
+            description: { type: 'string' },
             website_url: { type: 'string', nullable: true },
             logo_url: { type: 'string', nullable: true },
             created_at: { type: 'string', format: 'date-time' },
@@ -180,10 +181,11 @@ const options: swaggerJsdoc.Options = {
               'application/json': {
                 schema: {
                   type: 'object',
-                  required: ['name', 'slug'],
+                  required: ['name', 'acronym', 'description'],
                   properties: {
                     name: { type: 'string' },
-                    slug: { type: 'string' },
+                    acronym: { type: 'string' },
+                    description: { type: 'string' },
                     website_url: { type: 'string', nullable: true },
                     logo_url: { type: 'string', nullable: true },
                   },
@@ -197,15 +199,15 @@ const options: swaggerJsdoc.Options = {
               description: 'Unauthorized',
               content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } },
             },
-            409: { description: 'Slug conflict' },
+            409: { description: 'Acronym conflict' },
           },
         },
       },
-      '/agencies/{slug}': {
+      '/agencies/{acronym}': {
         get: {
           tags: ['Agencies'],
-          summary: 'Get agency by slug',
-          parameters: [{ name: 'slug', in: 'path', required: true, schema: { type: 'string' } }],
+          summary: 'Get agency by acronym',
+          parameters: [{ name: 'acronym', in: 'path', required: true, schema: { type: 'string' } }],
           responses: {
             200: { description: 'Agency found' },
             404: {
@@ -257,7 +259,7 @@ const options: swaggerJsdoc.Options = {
             {
               name: 'agency',
               in: 'query',
-              description: 'Filter by agency slug (e.g. "dfa", "nbi"). Cannot be combined with agency_id.',
+              description: 'Filter by agency acronym (e.g. "dfa", "nbi"). Cannot be combined with agency_id.',
               schema: { type: 'string', example: 'dfa' },
             },
             {

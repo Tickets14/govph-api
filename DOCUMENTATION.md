@@ -147,7 +147,7 @@ Paginated responses:
 Defined in `database/migrations/`.
 
 - `agencies`:
-  `id`, `name`, `slug`, `website_url`, `logo_url`, `created_at`, `updated_at`
+  `id`, `name`, `acronym`, `description`, `website_url`, `logo_url`, `created_at`, `updated_at`
 - `services`:
   `id`, `agency_id`, `name`, `slug`, `description`, `estimated_time`,
   `appointment_url`, `is_active`, `created_at`, `updated_at`
@@ -180,7 +180,7 @@ Swagger UI: `/api/docs`
 | ------ | ------------------------------------ | ----------- | ---------------------------------------- |
 | GET    | `/health`                            | Public      | Health check                             |
 | GET    | `/agencies`                          | Public      | List agencies (paginated)                |
-| GET    | `/agencies/:slug`                    | Public      | Get agency by slug                       |
+| GET    | `/agencies/:acronym`                 | Public      | Get agency by acronym                    |
 | POST   | `/agencies`                          | Admin       | Create agency                            |
 | PUT    | `/agencies/:id`                      | Admin       | Update agency                            |
 | DELETE | `/agencies/:id`                      | Admin       | Delete agency                            |
@@ -206,6 +206,7 @@ Swagger UI: `/api/docs`
 `GET /services` supports:
 
 - `search`: full-text search across service name, description, and agency name.
+- `agency`: filter by agency acronym (e.g., `dfa`, `nbi`). Cannot be combined with `agency_id`.
 - `agency_id`: filter by agency UUID.
 - `is_active`: `true` or `false`.
 - `page`, `limit`: pagination.
@@ -216,6 +217,7 @@ Swagger UI: `/api/docs`
 
 ### Request Bodies (Common)
 
+- Create agency: `name`, `acronym`, `description`, optional `website_url`, `logo_url`.
 - Create service: `agency_id`, `name`, `slug`, `description`, optional `estimated_time`, `appointment_url`, `is_active`.
 - Create step: `order`, `title`, optional `description`, `is_optional`.
 - Reorder steps: `step_ids: string[]`.

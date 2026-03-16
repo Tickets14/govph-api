@@ -23,15 +23,15 @@ export class AgencyService {
     return agency;
   }
 
-  async getAgencyBySlug(slug: string): Promise<Agency> {
-    const agency = await this.repo.findBySlug(slug);
-    if (!agency) throw new AgencyNotFoundError(slug);
+  async getAgencyByAcronym(acronym: string): Promise<Agency> {
+    const agency = await this.repo.findByAcronym(acronym);
+    if (!agency) throw new AgencyNotFoundError(acronym);
     return agency;
   }
 
   async createAgency(dto: CreateAgencyInput): Promise<Agency> {
-    const existing = await this.repo.findBySlug(dto.slug);
-    if (existing) throw new ConflictError(`Slug '${dto.slug}' is already taken`);
+    const existing = await this.repo.findByAcronym(dto.acronym);
+    if (existing) throw new ConflictError(`Acronym '${dto.acronym}' is already taken`);
     return this.repo.create({
       id: generateId(),
       ...dto,
@@ -43,9 +43,9 @@ export class AgencyService {
   async updateAgency(id: string, dto: UpdateAgencyInput): Promise<Agency> {
     const agency = await this.repo.findById(id);
     if (!agency) throw new AgencyNotFoundError(id);
-    if (dto.slug && dto.slug !== agency.slug) {
-      const conflict = await this.repo.findBySlug(dto.slug);
-      if (conflict) throw new ConflictError(`Slug '${dto.slug}' is already taken`);
+    if (dto.acronym && dto.acronym !== agency.acronym) {
+      const conflict = await this.repo.findByAcronym(dto.acronym);
+      if (conflict) throw new ConflictError(`Acronym '${dto.acronym}' is already taken`);
     }
     return (await this.repo.update(id, dto))!;
   }

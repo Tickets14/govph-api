@@ -10,7 +10,8 @@ The schema is managed with Knex migrations in `database/migrations/`.
 | ------------- | ----------- | ---------------- |
 | `id`          | uuid        | Primary key      |
 | `name`        | string(255) | Required         |
-| `slug`        | string(100) | Unique, required |
+| `acronym`     | string(100) | Unique, required |
+| `description` | text        | Required         |
 | `website_url` | string(512) | Nullable         |
 | `logo_url`    | string(512) | Nullable         |
 | `created_at`  | timestamp   | Auto-managed     |

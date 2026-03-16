@@ -6,6 +6,12 @@ const slugRule = z
   .max(100)
   .regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens only');
 
+const acronymRule = z
+  .string()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9-]+$/, 'Acronym must be alphanumeric with optional hyphens');
+
 export const CreateServiceDto = z.object({
   body: z.object({
     agency_id: z.string().uuid('Must be a valid UUID'),
@@ -36,7 +42,7 @@ export const UpdateServiceDto = z.object({
 export const ServiceFilterDto = z.object({
   query: z.object({
     agency_id: z.string().uuid().optional(),
-    agency: slugRule.optional(), // slug-based agency filter, e.g. ?agency=dfa
+    agency: acronymRule.optional(), // acronym-based agency filter, e.g. ?agency=dfa
     is_active: z.enum(['true', 'false']).optional(),
     search: z.string().min(1).max(100).optional(),
     page: z.string().regex(/^\d+$/).optional(),
