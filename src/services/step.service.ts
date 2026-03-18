@@ -40,12 +40,16 @@ export class StepService {
 
     if (inputs.length === 0) return [];
 
+    const existing = await this.repo.findByService(serviceId);
+    const maxOrder = existing.length > 0 ? Math.max(...existing.map((s) => s.order)) : 0;
+
     const now = new Date();
-    const rows = inputs.map((input) => ({
+    const rows = inputs.map((input, i) => ({
       id: generateId(),
       service_id: serviceId,
       is_optional: false,
       ...input,
+      order: maxOrder + i + 1,
       created_at: now,
       updated_at: now,
     }));
