@@ -374,7 +374,7 @@ const options: swaggerJsdoc.Options = {
       '/services/{serviceId}/steps': {
         post: {
           tags: ['Services'],
-          summary: 'Add step to service (admin)',
+          summary: 'Add steps to service (admin)',
           security: [{ AdminKey: [] }],
           parameters: [{ name: 'serviceId', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } }],
           requestBody: {
@@ -382,17 +382,23 @@ const options: swaggerJsdoc.Options = {
             content: {
               'application/json': {
                 schema: {
-                  type: 'object',
-                  required: ['title'],
-                  properties: {
-                    title: { type: 'string' },
-                    description: { type: 'string', nullable: true },
+                  type: 'array',
+                  minItems: 1,
+                  items: {
+                    type: 'object',
+                    required: ['order', 'title'],
+                    properties: {
+                      order: { type: 'integer', example: 1 },
+                      title: { type: 'string' },
+                      description: { type: 'string', nullable: true },
+                      is_optional: { type: 'boolean', default: false },
+                    },
                   },
                 },
               },
             },
           },
-          responses: { 201: { description: 'Step created' }, 401: { description: 'Unauthorized' } },
+          responses: { 201: { description: 'Steps created' }, 401: { description: 'Unauthorized' } },
         },
       },
       '/services/{serviceId}/steps/reorder': {

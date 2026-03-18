@@ -44,7 +44,7 @@ router.use('/agencies', agencyRoutes(agencyController));
  *   POST   /services
  *   PUT    /services/:id
  *   DELETE /services/:id
- *   POST   /services/:serviceId/steps
+ *   POST   /services/:serviceId/steps (bulk)
  *   PATCH  /services/:serviceId/steps/reorder
  */
 router.use('/services', serviceRoutes(serviceController, stepController));

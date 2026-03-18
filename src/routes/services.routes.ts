@@ -10,7 +10,7 @@ import {
   validateServiceSlugParams,
   validateUpdateService,
 } from '../validators/service.validator';
-import { validateCreateStep, validateReorderSteps } from '../validators/step.validator';
+import { validateCreateSteps, validateReorderSteps } from '../validators/step.validator';
 
 /**
  * Mounted at /services
@@ -24,7 +24,7 @@ import { validateCreateStep, validateReorderSteps } from '../validators/step.val
  *   POST   /                        → create service
  *   PUT    /:id                     → update service
  *   DELETE /:id                     → delete service
- *   POST   /:serviceId/steps        → add step to service
+ *   POST   /:serviceId/steps        → add steps to service
  *   PATCH  /:serviceId/steps/reorder → reorder steps
  */
 export function serviceRoutes(serviceController: ServiceController, stepController: StepController): Router {
@@ -44,7 +44,7 @@ export function serviceRoutes(serviceController: ServiceController, stepControll
   router.delete('/:id', strictRateLimit, adminGuard, validateServiceIdParams, serviceController.delete);
 
   // Nested step mutations — admin only
-  router.post('/:serviceId/steps', strictRateLimit, adminGuard, validateCreateStep, stepController.create);
+  router.post('/:serviceId/steps', strictRateLimit, adminGuard, validateCreateSteps, stepController.create);
   router.patch('/:serviceId/steps/reorder', strictRateLimit, adminGuard, validateReorderSteps, stepController.reorder);
 
   return router;

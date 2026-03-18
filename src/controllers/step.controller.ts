@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { StepService } from '../services/step.service';
 import { HTTP_STATUS } from '../constants/common';
 import { sendSuccess, sendCreated, sendNoContent } from '../utils/response';
-import { CreateStepBody, UpdateStepBody, ReorderStepsBody } from '../dto/step.dto';
+import { CreateStepsBody, UpdateStepBody, ReorderStepsBody } from '../dto/step.dto';
 
 export class StepController {
   constructor(private readonly service: StepService) {}
@@ -13,11 +13,10 @@ export class StepController {
   create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const serviceId = String(req.params['serviceId']);
-      const step = await this.service.create({
-        service_id: serviceId,
-        ...(req.body as CreateStepBody),
-      });
-      sendCreated(res, step, 'Step created');
+      const payload = req.body as CreateStepsBody;
+      const stepsInput = Array.isArray(payload) ? payload : [payload];
+      const steps = await this.service.createMany(serviceId, stepsInput);
+      sendCreated(res, steps, 'Steps created');
     } catch (err) {
       next(err);
     }

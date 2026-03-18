@@ -190,7 +190,7 @@ Swagger UI: `/api/docs`
 | POST   | `/services`                          | Admin       | Create service                           |
 | PUT    | `/services/:id`                      | Admin       | Update service                           |
 | DELETE | `/services/:id`                      | Admin       | Delete service                           |
-| POST   | `/services/:serviceId/steps`         | Admin       | Add step to service                      |
+| POST   | `/services/:serviceId/steps`         | Admin       | Add steps to service (bulk)              |
 | PATCH  | `/services/:serviceId/steps/reorder` | Admin       | Reorder steps                            |
 | PUT    | `/steps/:id`                         | Admin       | Update step                              |
 | DELETE | `/steps/:id`                         | Admin       | Delete step                              |
@@ -219,7 +219,7 @@ Swagger UI: `/api/docs`
 
 - Create agency: `name`, `acronym`, `description`, optional `website_url`, `logo_url`.
 - Create service: `agency_id`, `name`, `slug`, `description`, optional `estimated_time`, `appointment_url`, `is_active`.
-- Create step: `order`, `title`, optional `description`, `is_optional`.
+- Create steps (bulk): array of step objects with `order`, `title`, optional `description`, `is_optional`.
 - Reorder steps: `step_ids: string[]`.
 - Create requirement: `service_id`, `name`, optional `description`, `is_optional`, `notes`.
 - Toggle progress: `step_id`.

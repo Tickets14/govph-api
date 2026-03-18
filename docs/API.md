@@ -152,10 +152,10 @@ curl -X DELETE "http://localhost:3000/api/v1/services/<uuid>" -H "X-Admin-Key: <
 
 ### Steps
 
-`POST /services/:serviceId/steps` (admin)
+`POST /services/:serviceId/steps` (admin, bulk)
 
 ```bash
-curl -X POST "http://localhost:3000/api/v1/services/<serviceId>/steps" -H "Content-Type: application/json" -H "X-Admin-Key: <ADMIN_API_KEY>" -d '{"order":1,"title":"Submit application","description":"...","is_optional":false}'
+curl -X POST "http://localhost:3000/api/v1/services/<serviceId>/steps" -H "Content-Type: application/json" -H "X-Admin-Key: <ADMIN_API_KEY>" -d '[{"order":1,"title":"Submit application","description":"...","is_optional":false},{"order":2,"title":"Pay fee","description":"...","is_optional":false}]'
 ```
 
 `PATCH /services/:serviceId/steps/reorder` (admin)

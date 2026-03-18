@@ -34,6 +34,25 @@ export class StepService {
     });
   }
 
+  async createMany(serviceId: string, inputs: Omit<CreateStepInput, 'service_id'>[]): Promise<Step[]> {
+    const service = await this.serviceRepo.findById(serviceId);
+    if (!service) throw new ServiceNotFoundError(serviceId);
+
+    if (inputs.length === 0) return [];
+
+    const now = new Date();
+    const rows = inputs.map((input) => ({
+      id: generateId(),
+      service_id: serviceId,
+      is_optional: false,
+      ...input,
+      created_at: now,
+      updated_at: now,
+    }));
+
+    return this.repo.createMany(rows);
+  }
+
   async update(id: string, input: UpdateStepInput): Promise<Step> {
     const step = await this.repo.findById(id);
     if (!step) throw new StepNotFoundError(id);
