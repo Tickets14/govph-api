@@ -4,6 +4,7 @@ export interface Service {
   name: string;
   slug: string;
   description: string;
+  category: string | null;
   estimated_time: string | null;
   appointment_url: string | null;
   is_active: boolean;
@@ -16,6 +17,7 @@ export interface CreateServiceInput {
   name: string;
   slug: string;
   description: string;
+  category?: string | null;
   estimated_time?: string | null;
   appointment_url?: string | null;
   is_active?: boolean;
@@ -26,6 +28,7 @@ export interface UpdateServiceInput {
   name?: string;
   slug?: string;
   description?: string;
+  category?: string | null;
   estimated_time?: string | null;
   appointment_url?: string | null;
   is_active?: boolean;
