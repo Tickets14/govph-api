@@ -39,6 +39,7 @@ export const AgencyAcronymParamsDto = z.object({
 
 export const AgencyFilterDto = z.object({
   query: z.object({
+    search: z.string().min(1).max(100).optional(),
     page: z.string().regex(/^\d+$/).optional(),
     limit: z.string().regex(/^\d+$/).optional(),
   }),
