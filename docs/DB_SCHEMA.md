@@ -97,6 +97,25 @@ Indexes:
 - `user_id`
 - (`user_id`, `service_id`)
 
+### `feedbacks`
+
+| Column        | Type        | Notes                                          |
+| ------------- | ----------- | ---------------------------------------------- |
+| `id`          | uuid        | Primary key                                    |
+| `type`        | string(50)  | `bug`, `feature_request`, or `general`         |
+| `subject`     | string(255) | Required                                       |
+| `description` | text        | Required                                       |
+| `email`       | string(255) | Nullable — optional contact email              |
+| `status`      | string(50)  | `open`, `in_progress`, `resolved`, or `closed` |
+| `created_at`  | timestamp   | Auto-managed                                   |
+| `updated_at`  | timestamp   | Auto-managed                                   |
+
+Indexes:
+
+- `type`
+- `status`
+- `created_at`
+
 ## Relationships
 
 - An agency has many services.

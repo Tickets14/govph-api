@@ -22,6 +22,7 @@ export const ErrorCode = {
 
   // ── Business logic ────────────────────────────────────────────────────────
   INVALID_PROGRESS: 'INVALID_PROGRESS',
+  FEEDBACK_NOT_FOUND: 'FEEDBACK_NOT_FOUND',
 
   // ── Rate limiting ─────────────────────────────────────────────────────────
   RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',

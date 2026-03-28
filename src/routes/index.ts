@@ -4,12 +4,14 @@ import { serviceRoutes } from './services.routes';
 import { stepRoutes } from './steps.routes';
 import { requirementRoutes } from './requirements.routes';
 import { progressRoutes } from './progress.routes';
+import { feedbackRoutes } from './feedbacks.routes';
 import {
   agencyController,
   serviceController,
   stepController,
   requirementController,
   progressController,
+  feedbackController,
 } from '../container';
 
 const router = Router();
@@ -71,5 +73,15 @@ router.use('/requirements', requirementRoutes(requirementController));
  *   DELETE /progress/:serviceId
  */
 router.use('/progress', progressRoutes(progressController));
+
+/**
+ * Feedbacks (issue reports & feature requests)
+ *   POST   /feedbacks          → submit (public, rate-limited)
+ *   GET    /feedbacks           → list all (admin)
+ *   GET    /feedbacks/:id       → get single (admin)
+ *   PUT    /feedbacks/:id       → update status (admin)
+ *   DELETE /feedbacks/:id       → delete (admin)
+ */
+router.use('/feedbacks', feedbackRoutes(feedbackController));
 
 export default router;
