@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { FeedbackService } from '../services/feedback.service';
 import { HTTP_STATUS } from '../constants/common';
 import { sendSuccess, sendCreated, sendNoContent, sendPaginated } from '../utils/response';
-import { FeedbackFilterQuery, CreateFeedbackBody, UpdateFeedbackBody } from '../dto/feedback.dto';
+import { FeedbackFilterQuery, CreateFeedbackBody, UpdateFeedbackBody, ReplyFeedbackBody } from '../dto/feedback.dto';
 
 export class FeedbackController {
   constructor(private readonly service: FeedbackService) {}
@@ -55,6 +55,20 @@ export class FeedbackController {
     try {
       const feedback = await this.service.updateFeedback(String(req.params['id']), req.body as UpdateFeedbackBody);
       sendSuccess(res, feedback, 'Feedback updated', HTTP_STATUS.OK);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  /**
+   * POST /feedbacks/:id/reply
+   * Sends a reply email to the feedback sender (admin).
+   */
+  reply = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { message, email } = req.body as ReplyFeedbackBody;
+      await this.service.replyToFeedback(String(req.params['id']), message, email);
+      sendSuccess(res, null, 'Reply sent successfully');
     } catch (err) {
       next(err);
     }

@@ -4,11 +4,15 @@ import { FeedbackFilters } from '../repositories/interfaces/feedback.repository.
 import { PaginatedResponse } from '../types/common.types';
 import { parsePagination } from '../utils/pagination';
 import { generateId } from '../utils/uuid';
-import { NotFoundError } from '../middleware/error.middleware';
+import { NotFoundError, ValidationError } from '../middleware/error.middleware';
 import { ErrorCode } from '../constants/error-codes';
+import { EmailService } from './email.service';
 
 export class FeedbackService {
-  constructor(private readonly repo: FeedbackRepository) {}
+  constructor(
+    private readonly repo: FeedbackRepository,
+    private readonly emailService: EmailService
+  ) {}
 
   async getAllFeedbacks(
     filters?: Omit<FeedbackFilters, 'limit' | 'offset'>,
@@ -32,7 +36,7 @@ export class FeedbackService {
   }
 
   async createFeedback(dto: CreateFeedbackInput): Promise<Feedback> {
-    return this.repo.create({
+    const feedback = await this.repo.create({
       id: generateId(),
       ...dto,
       email: dto.email ?? null,
@@ -40,12 +44,26 @@ export class FeedbackService {
       created_at: new Date(),
       updated_at: new Date(),
     });
+
+    this.emailService.sendFeedbackNotification(feedback.type, feedback.subject, feedback.description, feedback.email);
+
+    return feedback;
   }
 
   async updateFeedback(id: string, dto: UpdateFeedbackInput): Promise<Feedback> {
     const feedback = await this.repo.findById(id);
     if (!feedback) throw new NotFoundError(`Feedback '${id}' not found`, ErrorCode.FEEDBACK_NOT_FOUND);
     return (await this.repo.update(id, dto))!;
+  }
+
+  async replyToFeedback(id: string, message: string, email: string): Promise<void> {
+    const feedback = await this.repo.findById(id);
+    if (!feedback) throw new NotFoundError(`Feedback '${id}' not found`, ErrorCode.FEEDBACK_NOT_FOUND);
+
+    const sent = await this.emailService.sendFeedbackReply(email, feedback.subject, message);
+    if (!sent) {
+      throw new ValidationError('Failed to send reply email');
+    }
   }
 
   async deleteFeedback(id: string): Promise<void> {

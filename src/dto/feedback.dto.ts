@@ -35,7 +35,16 @@ export const FeedbackFilterDto = z.object({
   }),
 });
 
+export const ReplyFeedbackDto = z.object({
+  params: z.object({ id: z.string().uuid('Must be a valid UUID') }),
+  body: z.object({
+    message: z.string().min(1, 'Message is required').max(5000),
+    email: z.string().email('Must be a valid email'),
+  }),
+});
+
 export type CreateFeedbackBody = z.infer<typeof CreateFeedbackDto>['body'];
 export type UpdateFeedbackBody = z.infer<typeof UpdateFeedbackDto>['body'];
 export type FeedbackFilterQuery = z.infer<typeof FeedbackFilterDto>['query'];
+export type ReplyFeedbackBody = z.infer<typeof ReplyFeedbackDto>['body'];
 export type FeedbackIdParams = z.infer<typeof FeedbackIdParamsDto>['params'];

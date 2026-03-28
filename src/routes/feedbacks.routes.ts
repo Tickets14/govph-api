@@ -7,6 +7,7 @@ import {
   validateFeedbackIdParams,
   validateCreateFeedback,
   validateUpdateFeedback,
+  validateReplyFeedback,
 } from '../validators/feedback.validator';
 
 /**
@@ -31,6 +32,7 @@ export function feedbackRoutes(controller: FeedbackController): Router {
   router.get('/', adminGuard, validateFeedbackFilter, controller.getAll);
   router.get('/:id', adminGuard, validateFeedbackIdParams, controller.getById);
   router.put('/:id', strictRateLimit, adminGuard, validateUpdateFeedback, controller.update);
+  router.post('/:id/reply', strictRateLimit, adminGuard, validateReplyFeedback, controller.reply);
   router.delete('/:id', strictRateLimit, adminGuard, validateFeedbackIdParams, controller.delete);
 
   return router;

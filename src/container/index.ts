@@ -7,6 +7,7 @@ import { UserProgressRepository } from '../repositories/user-progress.repository
 import { FeedbackRepository } from '../repositories/feedback.repository';
 
 // Services
+import { EmailService } from '../services/email.service';
 import { AgencyService } from '../services/agency.service';
 import { ServiceService } from '../services/service.service';
 import { StepService } from '../services/step.service';
@@ -31,6 +32,7 @@ const userProgressRepository = new UserProgressRepository();
 const feedbackRepository = new FeedbackRepository();
 
 // ─── Services ─────────────────────────────────────────────────────────────────
+const emailService = new EmailService();
 const agencyService = new AgencyService(agencyRepository);
 
 const serviceService = new ServiceService(
@@ -47,7 +49,7 @@ const requirementService = new RequirementService(requirementRepository, stepRep
 
 const progressService = new ProgressService(userProgressRepository, serviceRepository, stepRepository);
 
-const feedbackService = new FeedbackService(feedbackRepository);
+const feedbackService = new FeedbackService(feedbackRepository, emailService);
 
 // ─── Controllers ──────────────────────────────────────────────────────────────
 export const agencyController = new AgencyController(agencyService);
