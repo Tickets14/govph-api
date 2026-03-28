@@ -1,5 +1,6 @@
 import { Agency, CreateAgencyInput, UpdateAgencyInput } from '../types/agency.types';
 import { AgencyRepository } from '../repositories/agency.repository';
+import { AgencyFilters } from '../repositories/interfaces/agency.repository.interface';
 import { PaginatedResponse } from '../types/common.types';
 import { parsePagination } from '../utils/pagination';
 import { generateId } from '../utils/uuid';
@@ -8,9 +9,15 @@ import { AgencyNotFoundError, ConflictError } from '../middleware/error.middlewa
 export class AgencyService {
   constructor(private readonly repo: AgencyRepository) {}
 
-  async getAllAgencies(query: { page?: unknown; limit?: unknown } = {}): Promise<PaginatedResponse<Agency>> {
-    const { page, limit, offset } = parsePagination(query);
-    const [data, total] = await Promise.all([this.repo.findAll(limit, offset), this.repo.count()]);
+  async getAllAgencies(
+    filters?: Omit<AgencyFilters, 'limit' | 'offset'>,
+    paginationQuery: { page?: unknown; limit?: unknown } = {}
+  ): Promise<PaginatedResponse<Agency>> {
+    const { page, limit, offset } = parsePagination(paginationQuery);
+    const [data, total] = await Promise.all([
+      this.repo.findFiltered({ ...filters, limit, offset }),
+      this.repo.countFiltered(filters),
+    ]);
     return {
       data,
       meta: { total, page, limit, totalPages: Math.ceil(total / limit) },

@@ -13,7 +13,8 @@ export class AgencyController {
    */
   getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const result = await this.service.getAllAgencies(req.query as AgencyFilterQuery);
+      const { search } = req.query as AgencyFilterQuery;
+      const result = await this.service.getAllAgencies({ search }, req.query);
       sendPaginated(res, result);
     } catch (err) {
       next(err);

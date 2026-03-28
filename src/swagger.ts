@@ -149,8 +149,14 @@ const options: swaggerJsdoc.Options = {
       '/agencies': {
         get: {
           tags: ['Agencies'],
-          summary: 'List all agencies (paginated)',
+          summary: 'List all agencies (paginated, searchable)',
           parameters: [
+            {
+              name: 'search',
+              in: 'query',
+              description: 'Search across agency name, acronym, and description (case-insensitive)',
+              schema: { type: 'string' },
+            },
             { name: 'page', in: 'query', schema: { type: 'integer', default: 1 } },
             { name: 'limit', in: 'query', schema: { type: 'integer', default: 20 } },
           ],
