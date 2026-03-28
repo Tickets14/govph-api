@@ -1,6 +1,10 @@
 import nodemailer, { Transporter } from 'nodemailer';
+import dns from 'dns';
 import { env } from '../config/env';
 import logger from '../logging/logger';
+
+// Force IPv4 DNS resolution to avoid ENETUNREACH on IPv6-limited hosts (e.g. Railway)
+dns.setDefaultResultOrder('ipv4first');
 
 export class EmailService {
   private transporter: Transporter;
